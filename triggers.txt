@@ -1,4 +1,4 @@
---triggers
+-- triggers
 
 
 DELIMITER $$
@@ -58,14 +58,14 @@ FOR EACH ROW
 BEGIN
     DECLARE is_judge INT;
 
-    -- Check if the chef is a judge in the same episode
+    
     SELECT COUNT(*)
     INTO is_judge
     FROM `judge`
     WHERE `EpisodeID` = NEW.`EpisodeID`
       AND `ChefID` = NEW.`ChefID`;
 
-    -- If the chef is already a judge, prevent the insert
+    
     IF is_judge > 0 THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'A chef cannot participate in the same episode as both a judge and a participant in the assignment.';
@@ -115,19 +115,19 @@ BEGIN
     DECLARE assignmentCount INT;
     DECLARE judgeCount INT;
 
-    -- Count assignments for the chef in the episode
+   
     SELECT COUNT(*)
     INTO assignmentCount
     FROM assignment
     WHERE ChefID = VchefId AND EpisodeID = VepisodeId;
 
-    -- Count judge roles for the chef in the episode
+  
     SELECT COUNT(*)
     INTO judgeCount
     FROM judge
     WHERE ChefID = VchefId AND EpisodeID = VepisodeId;
 
-    -- Raise an error if both counts are greater than zero
+   
     IF (assignmentCount > 0 AND judgeCount > 0) THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Chef cannot be assigned to both a judge and an assignment in the same episode.';
     END IF;
@@ -166,17 +166,17 @@ CREATE OR REPLACE TRIGGER cheff_recipe_can_cook_trg
 BEFORE INSERT ON isabletocook
 FOR EACH ROW
 BEGIN
-    -- Variable declaration
+    
     DECLARE chef_specializationcuisine INT;
     DECLARE recipe_cuisinerecipebelongs INT;
     
-    -- Retrieve the chef's specialization cuisine
+    
     SELECT CuisineID INTO chef_specializationcuisine FROM specialises WHERE Chefid = NEW.Chefid;
     
-    -- Retrieve the cuisineID of the recipe
+   
     SELECT CuisineID INTO recipe_cuisinerecipebelongs FROM recipe WHERE Recipeid = NEW.Recipeid;
 
-    -- Check if the chef's specialization cuisine matches the recipe's cuisine
+    
     IF chef_specializationcuisine <> recipe_cuisinerecipebelongs THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Chef cannot cook this cuisine';
     END IF;
