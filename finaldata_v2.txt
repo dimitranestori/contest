@@ -2122,5 +2122,93 @@ INSERT INTO `specialises` (`CuisineID`, `ChefID`) VALUES
 
 -- --------------------------------------------------------
 
+INSERT INTO Permissions (permissionID,description) VALUES 
+(1,'MANAGE_PERSONAL_DATA'),
+(2,'MANAGE_ALL_DATA'),
+(3,'MANAGE_OWNED_RECIPES'),
+(4,'BACKUP_DATA'),
+(5,'RESTORE_DATA');
+
+
+
+INSERT INTO User (userID, username, password, role, chefID) VALUES
+(1, 'cook_user1', 'cook_password1', 'Cook', 1),
+(2, 'cook_user2', 'cook_password2', 'Cook', 2),
+(3, 'cook_user3', 'cook_password3', 'Cook', 3),
+(4, 'cook_user4', 'cook_password4', 'Cook', 4),
+(5, 'cook_user5', 'cook_password5', 'Cook', 5),
+(6, 'cook_user6', 'cook_password6', 'Cook', 6),
+(7, 'cook_user7', 'cook_password7', 'Cook', 7),
+(8, 'cook_user8', 'cook_password8', 'Cook', 8),
+(9, 'cook_user9', 'cook_password9', 'Cook', 9),
+(10, 'cook_user10', 'cook_password10', 'Cook', 10),
+(11, 'cook_user11', 'cook_password11', 'Cook', 11),
+(12, 'cook_user12', 'cook_password12', 'Cook', 12),
+(13, 'cook_user13', 'cook_password13', 'Cook', 13),
+(14, 'cook_user14', 'cook_password14', 'Cook', 14),
+(15, 'cook_user15', 'cook_password15', 'Cook', 15),
+(16, 'cook_user16', 'cook_password16', 'Cook', 16),
+(17, 'cook_user17', 'cook_password17', 'Cook', 17),
+(18, 'cook_user18', 'cook_password18', 'Cook', 18),
+(19, 'cook_user19', 'cook_password19', 'Cook', 19),
+(20, 'cook_user20', 'cook_password20', 'Cook', 20),
+(21, 'cook_user21', 'cook_password21', 'Cook', 21),
+(22, 'cook_user22', 'cook_password22', 'Cook', 22),
+(23, 'cook_user23', 'cook_password23', 'Cook', 23),
+(24, 'cook_user24', 'cook_password24', 'Cook', 24),
+(25, 'cook_user25', 'cook_password25', 'Cook', 25),
+(26, 'cook_user26', 'cook_password26', 'Cook', 26),
+(27, 'cook_user27', 'cook_password27', 'Cook', 27),
+(28, 'cook_user28', 'cook_password28', 'Cook', 28),
+(29, 'cook_user29', 'cook_password29', 'Cook', 29),
+(30, 'cook_user30', 'cook_password30', 'Cook', 30),
+(31, 'cook_user31', 'cook_password31', 'Cook', 31),
+(32, 'cook_user32', 'cook_password32', 'Cook', 32),
+(33, 'cook_user33', 'cook_password33', 'Cook', 33),
+(34, 'cook_user34', 'cook_password34', 'Cook', 34),
+(35, 'cook_user35', 'cook_password35', 'Cook', 35),
+(36, 'cook_user36', 'cook_password36', 'Cook', 36),
+(37, 'cook_user37', 'cook_password37', 'Cook', 37),
+(38, 'cook_user38', 'cook_password38', 'Cook', 38),
+(39, 'cook_user39', 'cook_password39', 'Cook', 39),
+(40, 'cook_user40', 'cook_password40', 'Cook', 40),
+(41, 'cook_user41', 'cook_password41', 'Cook', 41),
+(42, 'cook_user42', 'cook_password42', 'Cook', 42),
+(43, 'cook_user43', 'cook_password43', 'Cook', 43),
+(44, 'cook_user44', 'cook_password44', 'Cook', 44),
+(45, 'cook_user45', 'cook_password45', 'Cook', 45),
+(46, 'cook_user46', 'cook_password46', 'Cook', 46),
+(47, 'cook_user47', 'cook_password47', 'Cook', 47),
+(48, 'cook_user48', 'cook_password48', 'Cook', 48),
+(49, 'cook_user49', 'cook_password49', 'Cook', 49),
+(50, 'cook_user50', 'cook_password50', 'Cook', 50),
+(51, 'admin_user1', 'admin_password1', 'Admin', NULL),
+(52, 'admin_user2', 'admin_password2', 'Admin', NULL),
+(53, 'admin_user3', 'admin_password3', 'Admin', NULL);
+
+
+INSERT INTO hasPermission (userID, permissionID)
+SELECT u.userID, p.permissionID
+FROM User u
+CROSS JOIN (
+    SELECT 1 AS permissionID
+    UNION ALL
+    SELECT 3 AS permissionID
+) p
+WHERE u.role = 'Cook';
+
+INSERT INTO hasPermission (userID, permissionID)
+SELECT u.userID, p.permissionID
+FROM User u
+CROSS JOIN (
+    SELECT 1 AS permissionID
+    UNION ALL
+    SELECT 2 AS permissionID
+    UNION ALL
+    SELECT 4 AS permissionID
+    UNION ALL
+    SELECT 5 AS permissionID
+) p
+WHERE u.role = 'Admin';
 
 
