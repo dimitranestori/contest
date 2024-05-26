@@ -65,7 +65,7 @@ having count(*)>3;
 
 --3.6
 
--- recipes with exactly two types of meals
+
 WITH RecipeMealCounts AS (
     SELECT
         hl.RecipeID,
@@ -77,7 +77,7 @@ WITH RecipeMealCounts AS (
     HAVING
         MealTypeCount = 2
 ),
--- Count the number of episodes each recipe participated in
+
 RecipeEpisodeCounts AS (
     SELECT
         a.RecipeID,
@@ -87,7 +87,7 @@ RecipeEpisodeCounts AS (
     GROUP BY
         a.RecipeID
 ),
--- filter for recipes with two types of meals
+
 TopRecipes AS (
     SELECT
         rmc.RecipeID,
@@ -100,7 +100,7 @@ TopRecipes AS (
         rec.EpisodeCount DESC
     LIMIT 3 
 )
--- Retrieve the types of meals for the top recipes
+
 SELECT
     tr.RecipeID,
     r.Name AS RecipeName,
