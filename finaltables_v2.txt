@@ -217,3 +217,28 @@ CREATE TABLE `specialises` (
   CONSTRAINT `specialises_ibfk_1` FOREIGN KEY (`CuisineID`) REFERENCES `cuisine` (`CuisineID`) ON UPDATE CASCADE,
   CONSTRAINT `specialises_ibfk_2` FOREIGN KEY (`ChefID`) REFERENCES `chef` (`ChefID`) ON UPDATE CASCADE
 );
+
+CREATE TABLE User (
+    userID INT(11) NOT NULL AUTO_INCREMENT,
+    username CHAR(30) UNIQUE NOT NULL,
+    password CHAR(30) NOT NULL,
+    role ENUM('Admin', 'Cook') NOT NULL,
+    chefID INT(11) NULL,
+    PRIMARY KEY (userID),
+    FOREIGN KEY (chefID) REFERENCES Chef(ChefID)
+);
+
+
+CREATE TABLE Permissions (
+    permissionID INT(11) NOT NULL AUTO_INCREMENT,
+    description TEXT NOT NULL,
+    PRIMARY KEY (permissionID)
+);
+
+CREATE TABLE hasPermission (
+    userID INT(11) NOT NULL,
+    permissionID INT(11) NOT NULL,
+    PRIMARY KEY (userID, permissionID),
+    FOREIGN KEY (userID) REFERENCES User(userID),
+    FOREIGN KEY (permissionID) REFERENCES Permissions(permissionID)
+);
